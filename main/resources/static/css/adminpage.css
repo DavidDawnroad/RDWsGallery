@@ -1,0 +1,64 @@
+body {
+	margin: 0;
+	background-color: lightgrey;
+	font-size: 0.95rem;
+}
+
+.logo-link {
+	display: inline-block;
+	width: 22%;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+.inner {
+	display: block;
+	margin: 0 auto;
+	width: 1000px;
+	min-height: 100vh;
+	background-color: white;
+	padding: 40px 30px;
+	box-sizing: border-box;
+}
+
+.logo-link {
+	width: 22%;
+	display: inline-block;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+#logo {
+	height: auto;
+	display: block;
+}
+
+.detail-reply-pagenation-container {
+	/*text-align: center;*/
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+.reply-page-number-wrapper {
+	margin: 0 5px;
+}
+
+.reply-page-link-active {
+	color: red;
+	font-weight: bold;
+}
+
+.reply-page-link-inactive {
+	text-decoration: none;
+	color: black;
+}
+
+.reply-nav-button-enabled {
+	text-decoration: none;
+	color: black;
+}
+
+.reply-nav-button-disabled {
+	color: #ccc;
+}

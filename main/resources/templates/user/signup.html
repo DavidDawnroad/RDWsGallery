@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	
+	<th:block th:fragment="assets">
+		<script th:src="@{/js/signup.js}" defer></script>
+		<link rel="stylesheet" th:href="@{/css/user.css}">
+	</th:block>
+	
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+			<div class="login-wrapper">
+				<h2>회원가입</h2>
+				<form id="signupForm" class="loginForm"> <!-- axios에서 데이터 전송을 담당할 예정이므로 th:action 태그는 필요 없다. -->
+					<input type="text" id="id" placeholder="ID(4~20자)" required>
+					<input type="password" id="pw" placeholder="비밀번호(영문+숫자 8자 이상)" required>
+					<input type="email" id="email" placeholder="이메일" required>
+					<input type="text" id="nickname" placeholder="닉네임(12자 이하)" required>
+					<div id="signupMessage" class="checkMessage"></div>
+					<button type="submit" class="checkMessage">가입</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>

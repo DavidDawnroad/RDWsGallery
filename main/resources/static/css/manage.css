@@ -1,0 +1,141 @@
+body {
+	margin: 0;
+	background-color: mediumpurple;
+	font-size: 0.95rem;
+}
+
+.logo-link {
+	display: inline-block;
+	width: 22%;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+.inner {
+	display: block;
+	margin: 0 auto;
+	width: 900px;
+	min-height: 100vh;
+	background-color: white;
+	padding: 40px 30px;
+	box-sizing: border-box;
+}
+
+.logo-link {
+	width: 22%;
+	display: inline-block;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+#logo {
+	height: auto;
+	display: block;
+}
+
+nav {
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+nav > div {
+	color: #333;
+	padding: 0 5px;
+}
+
+.nav-link {
+	color: #333;
+	text-decoration: none;
+}
+
+.nav-link-username {
+	color: #333;
+	text-decoration: underline;
+}
+
+.manage-content-container {
+	background-color: rgb(239,239,239);
+	min-height: 500px;
+}
+
+.manage-content-container-header {
+	padding: 10px 10px 10px 10px;
+	margin-bottom: 10px;
+	border: 2px solid mediumpurple; 
+}
+
+.manage-content-container-body {
+	padding: 0 20px 0 20px;
+}
+
+#manage-content-nickname {
+	width: 170px;
+	height: 15px;
+	border: 1px solid #cecdce;
+	margin-left: 6px;
+	padding: 10px;
+	font-size: 15px;
+}
+
+#manage-change-my-nickname-button {
+	padding: 10px 15px;
+	border: 1px solid #cecdce;
+	background-color: lightgrey;
+	margin-left: 6px;
+	cursor: pointer;
+	border-radius: 6px;
+	border: none;
+}
+
+#manage-change-my-nickname-message {
+	margin-left: 10px;
+}
+
+.manage-content-fields-wrapper {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.manage-content-field {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 10px 5px 10px;
+	min-width: 0;
+}
+
+.manage-content-first {
+	text-align: left;
+	text-decoration: none;
+	min-width: 0px;
+	max-width: 615px;
+	flex: 1;
+	overflow: hidden;
+	padding: 2px 2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.manage-content-first:hover {
+	text-decoration: underline;
+	text-decoration-color: #333;
+}
+
+.manage-content-first-title {
+	font-size: 85%;
+	margin-left: 15px;
+}
+
+.manage-content-second {
+	flex-shrink: 0;
+	width: 150px;
+	text-align: right;
+	white-space: nowrap;
+	margin-left: 15px;
+	font-size: 90%;
+	color: #888;
+}
+
+.notyf__message {
+  white-space: pre-line;
+}

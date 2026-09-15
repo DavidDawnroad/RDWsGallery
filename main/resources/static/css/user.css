@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+	background-color: mediumpurple;
+	font-size: 0.95rem;
+}
+
+.inner {
+	display: block;
+	margin: 0 auto;
+	width: 900px;
+	min-height: 100vh;
+	background-color: white;
+	padding: 40px 30px;
+	box-sizing: border-box;
+}
+
+.logo-link {
+	width: 22%;
+	display: inline-block;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+#logo {
+	height: auto;
+	display: block;
+}
+
+#logo:hover {
+	cursor: pointer;
+}
+
+.login-wrapper {
+	width: 400px;
+	min-height: 350px;
+	padding: 40px;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+	margin: auto;
+}
+
+.loginForm {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin-bottom: 24px;
+}
+
+.login-wrapper > h2 {
+	font-size: 24px;
+	color: mediumpurple;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.loginForm > input {
+	width: 100%;
+	height: 48px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	margin-bottom: 16px;
+	border-radius: 6px;
+	background-color: #F8F8F8;
+	border: 1px solid #ccc;
+}
+
+.loginForm > input::placeholder {
+	color: #D2D2D2;
+}
+
+.loginForm > label {
+	margin-bottom: 16px;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+}
+
+.loginForm > label > input {
+	margin-right: 8px;
+}
+
+.loginForm > button {
+	width: 100%;
+	height: 48px;
+	border-radius: 6px;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	background-color: mediumpurple;
+	cursor: pointer;
+}
+		
+.link-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+}
+		
+.link-wrapper > a {
+	color: #666;
+	font-size: 14px;
+	text-decoration: none;
+	position: relative;
+    z-index: 1;
+}
+		
+.link-wrapper > a:hover {
+	text-decoration: underline;
+	color: mediumpurple;
+	cursor: pointer;
+}
+		
+.no-drag {
+	-webkit-user-select: none; 
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+.checkMessage {
+	color: #ff3838;
+	font-size: 14px;
+}
+
+/* notyf에 줄바꿈 추가 */
+.notyf__message {
+  white-space: pre-line;
+}
+
+/* notyf 메시지창 길이 변경 */
+.notyf__toast {
+	width: fit-content; /* 메시지 양에 따라 자동 조절 */
+	min-width: auto;
+	max-width: 90vw;
+}

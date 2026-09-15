@@ -1,0 +1,437 @@
+body {
+	margin: 0;
+	background-color: mediumpurple;
+	font-size: 0.95rem;
+}
+
+.inner {
+	display: block;
+	margin: 0 auto;
+	width: 900px;
+	min-height: 100vh;
+	background-color: white;
+	padding: 40px 30px;
+	box-sizing: border-box;
+}
+
+.logo-link {
+	width: 22%;
+	display: inline-block;
+	margin-bottom: 30px;
+	text-decoration: none;
+}
+
+#logo {
+	height: auto;
+	display: block;
+}
+
+#logo:hover {
+	cursor: pointer;
+}
+
+.button-group {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 20px;
+}
+
+.board-button-left {
+	display: flex;
+	justify-content: flex-start;
+	margin-right: auto;
+}
+
+.board-button {
+	display: flex;
+	justify-content: flex-end;
+	margin-left: 20px;
+}
+
+.board-link {
+	padding: 5px 25px;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	color: black;
+	font-size: 15px;
+}
+
+.board-link:hover {
+	cursor: pointer;
+}
+
+#delete-button {
+	background-color: lightgrey;
+	color: red;
+}
+
+#update-button {
+	background-color: lightgrey;
+}
+
+nav {
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+nav > div {
+	color: #333;
+	padding: 0 5px;
+}
+
+.nav-link {
+	color: #333;
+	text-decoration: none;
+}
+
+.nav-link-username {
+	color: #333;
+	text-decoration: underline;
+}
+
+table {
+	text-align: center;
+	width: 840px;
+	max-height: 1500px;
+	padding: 5px 30px 5px 30px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-collapse: collapse;
+}
+
+table > thead {
+	border-bottom: 1px solid #333;
+}
+
+table > tbody > tr {
+	border-bottom: 1px solid lightgrey;
+}
+
+.board-title-area {
+	width: 430px;
+	max-width: 430px;
+	overflow: hidden;
+}
+
+.board-title-wrapper {
+	display: flex;
+	align-items: baseline;
+	gap: 4px;
+	width: 100%;
+	max-width: 430px;
+}
+
+.board-title-text {
+	display: block; /* <a> 태그는 글자 길이=가로폭인 inline형이기 때문에 block으로 변경 */
+	text-align: left;
+	text-decoration: none;
+	max-width: 430px;
+	min-width: 0;
+	padding: 2px 2px; /* 클릭 범위 살짝 넓히기 */
+	flex: 0 1 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.board-title-text:hover {
+	text-decoration: underline;
+	text-decoration-color: #333;
+}
+
+.board-title-reply {
+	flex: 0 0 auto;
+	white-space: nowrap;
+	color: #333;
+	font-size: 0.85rem;
+}
+
+.board-nickname-area {
+	width: 150px;
+}
+
+.board-date-area {
+	width: 85px;
+}
+
+.detail-header {
+	font-size: 1.2rem;
+}
+
+.detail-content {
+	margin-top: 20px;
+	min-height: 300px;
+}
+
+.detail-info {
+	color: #666;
+	font-size: 0.85rem;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid lightgrey;
+}
+
+.like-box {
+	display: flex;
+	width: 250px;
+	height: 80px;
+	padding: 10px 10px 10px 10px;
+	margin: 0 auto 20px auto;
+	border: 1px solid lightgrey;
+	text-align: center;
+	overflow: hidden;
+	justify-content: center;
+}
+
+.like-items {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.like-items > img {
+	width: 60px;
+	height: 60px;
+}
+
+.like-items > img:hover {
+	cursor: pointer;
+}
+
+.like-value {
+	margin-left: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+#like-value {
+	color: rgb(255,26,26);
+}
+
+.detail-reply-display {
+	margin-bottom: 20px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+/* 마지막 댓글의 bottom 구분선 제거 */
+.detail-reply-display:last-child {
+	border-bottom: none;
+}
+
+.reply-box {
+	border-bottom: 1px solid lightgrey;
+	padding: 15px 0 15px 5px;
+	display: flex;
+}
+
+.reply-list-header {
+	width: 150px;
+}
+
+.reply-list-nickname {
+	color: #555;
+	font-size: 90%;
+}
+
+.reply-list-content {
+	width: 600px;
+	color: #333;
+	white-space: pre-line;
+}
+
+.reply-list-footer {
+	width: 90px;
+	color: #555;
+	font-size: 80%;
+}
+
+.reply-delete-button {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+}
+
+.detail-reply-container {
+	display: block;
+	overflow: auto;
+	padding: 12px 12px 12px;
+	background-color: #fafafa;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+}
+
+.detail-userinfo-container {
+	float: left;
+}
+
+.detail-userinfo {
+	position: relative;
+	width: 130px;
+	height: 20px;
+	border: 1px solid #cecdce;
+	margin-right: 6px;
+	padding: 10px;
+	font-size: 15px;
+	color: #999999;
+}
+
+.detail-textarea-container {
+	float: right;
+}
+
+.detail-reply-textarea {
+	position: relative;
+	padding: 11px;
+	width: 630px;
+	height: 90px;
+	border: 1px solid #cecdce;
+	resize: none;
+}
+
+.detail-reply-submit {
+	width: 85px;
+	padding: 4px 20px;
+	clear: both;
+	display: block;
+	margin-top: 8px;
+	float: right;
+	border: 1px solid #ccc;
+	font-size: 14px;
+}
+
+.detail-reply-submit:hover {
+	cursor: pointer;
+}
+
+.post-container-upper {
+	display: flex;
+}
+
+.post-category-select {
+	justify-content: flex-start;
+	width: 100px;
+	margin-right: 15px;
+}
+
+.post-title-input {
+	width: 650px;
+	height: 20px;
+	justify-content: flex-end;
+}
+
+.post-content-textarea {
+	width: 100%;
+	min-height: 400px;
+	margin-top: 20px;
+	padding: 10px 5px 5px 10px;
+	resize: none;
+}
+
+.notyf__message {
+  white-space: pre-line;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 5px;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.page-link:hover {
+    background-color: #f5f5f5;
+}
+
+
+.pagination li.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.pagination li.disabled .page-link {
+    color: #ccc;
+    cursor: not-allowed;
+    background-color: #fafafa;
+}
+
+.delete-container {
+	width: 350px;
+	height: 100px;
+	border: 3px solid red;
+	text-align: center;
+	padding: 25px;
+	margin: 100px auto;
+}
+
+.delete-message {
+	padding: 15px;
+}
+
+.delete-button {
+	margin: 20px 10px 0 10px;
+}
+
+#delete-delete-button {
+	background-color: lightgrey;
+	color: red;
+}
+
+.detail-reply-pagenation-container {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+.reply-page-number-wrapper {
+	margin: 0 5px;
+}
+
+.reply-page-link-active {
+	color: red;
+	font-weight: bold;
+}
+
+.reply-page-link-inactive {
+	text-decoration: none;
+	color: black;
+}
+
+.reply-nav-button-enabled {
+	text-decoration: none;
+	color: black;
+}
+
+.reply-nav-button-disabled {
+	color: #ccc;
+}

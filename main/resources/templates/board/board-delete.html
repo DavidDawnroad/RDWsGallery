@@ -1,0 +1,33 @@
+<!-- 용도 폐기 페이지
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	<th:block th:fragment="assets">
+	<script th:src="@{/js/board-delete.js}" defer></script>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+	</th:block>
+</head>
+</html>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::#main-contents})}">
+		<div id="main-contents">
+		<th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+			<div class="delete-container">
+				<div class="delete-message">
+					<b>삭제된 게시물은 복구할 수 없습니다.</b>
+					<br>
+					<b>게시물을 삭제하시겠습니까?</b>
+				</div>
+				<div class="delete-button-group">
+					<span class="delete-button">
+					    <a class="board-link" href="javascript:history.back();">이전</a>
+					</span>
+					<span class="delete-button">
+					    <button class="board-link" id="delete-delete-button">삭제</button>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+-->

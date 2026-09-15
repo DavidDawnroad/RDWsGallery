@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	<th:block th:fragment="assets">
+	<script th:src="@{/js/board.js}" defer></script>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+	</th:block>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+		<th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>말머리</th>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<th>등록일</th>
+					<th>조회</th>
+					<th>추천</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="board : ${boardPage.content}">
+					<td th:text="${board.boardSeq}"></td>
+					<td th:switch="${board.category.name}">
+						<span th:case="Manage">관리</span>
+						<span th:case="Notice">공지</span>
+						<span th:case="General">일반</span>
+					</td>
+					<td class="board-title-area">
+						<div class="board-title-wrapper">
+							<!-- {}() : 주소창에 변수 동적 바인딩하여 RESTful 방식으로 게시글 페이지 호출(prac/board/1) -->
+							<a class="board-title-text" th:href="@{/board/{id}(id=${board.boardSeq})}" th:text="${board.title}"></a>
+							<span class="board-title-reply" th:if="${board.replyCount > 0}" th:text="|[${board.replyCount}]|"></span>
+						</div>
+					</td>
+					<td class="board-nickname-area" th:text="${board.nickname}"></td>
+					<td class="board-date-area" th:text="${board.formattedRegdate()}"></td>
+					<td th:text="${board.views}"></td>
+					<td th:text="${board.likes}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="button-group">
+			<div class="board-button">
+			    <a class="board-link" id="button-write" th:href="@{/board/write}" th:data-is-logged-in="${#authorization.expression('isAuthenticated()')}">글쓰기</a>
+			</div>
+		</div>
+		<div class="pagination-container">
+		    <ul class="pagination">
+		        <li th:if="${boardPage.hasPrevious()}">
+		            <a th:href="@{/board(page=${boardPage.number - 1})}" class="page-link">&lt;</a>
+		        </li>
+		        <li th:if="${!boardPage.hasPrevious()}" class="disabled">
+		            <span class="page-link">&lt;</span>
+		        </li>
+
+		        <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+		            th:classappend="${pageNumber - 1 == boardPage.number} ? 'active' : ''">
+		            
+		            <a th:href="@{/board(page=${pageNumber - 1})}" 
+		               th:text="${pageNumber}" 
+		               class="page-link">1</a>
+		        </li>
+
+		        <li th:if="${boardPage.hasNext()}">
+		            <a th:href="@{/board(page=${boardPage.number + 1})}" class="page-link">&gt;</a>
+		        </li>
+		        <li th:if="${!boardPage.hasNext()}" class="disabled">
+		            <span class="page-link">&gt;</span>
+		        </li>
+		        
+		    </ul>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

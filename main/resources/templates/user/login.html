@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- fragments/header.html의 html-head 조각페이지를 불러오되,
+	현재 페이지에서 assets라는 이름의 태그 블록을 찾고
+	html-head에 인자로 넘겨라 -->
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	
+	<th:block th:fragment="assets">
+		<script th:src="@{/js/login.js}" defer></script>
+		<link rel="stylesheet" th:href="@{/css/user.css}">
+	</th:block>
+	
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+			<div class="login-wrapper">
+				<h2 class="no-drag">RDW's gallery</h2>
+				<!-- PracPageExceptionHandler에서 처리한 UserNotFoundException 메시지를 출력하는 공간 -->
+				<div th:if="${errorMessage}">
+				    <span th:text="${errorMessage}"></span>
+				</div>
+				<form class="loginForm" id="loginForm">
+					<input type="text" id="id" placeholder="ID" th:value="${savedId}" required>
+					<input type="password" id="pw" placeholder="비밀번호" required>
+					<label for="rememberId">
+						<input type="checkbox" id="rememberId" th:checked="${rememberIdChecked}">아이디 저장하기
+					</label>
+					<button type="submit">로그인</button>
+				</form>
+				<div class="link-wrapper">
+					<a th:href="@{/verify-user}">아이디/비밀번호 찾기</a>
+					<span class="divider">|</span>
+					<a th:href="@{/signup}">회원가입</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

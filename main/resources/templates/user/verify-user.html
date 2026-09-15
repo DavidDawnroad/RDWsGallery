@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	
+	<th:block th:fragment="assets">
+		<script th:src="@{/js/verify-user.js}" defer></script>
+		<link rel="stylesheet" th:href="@{/css/user.css}">
+	</th:block>
+	
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+			<div class="login-wrapper">
+				<h2 class="no-drag">비밀번호 찾기</h2>
+				<div draggable="false" class="no-drag" style="margin-bottom: 5px;">회원가입했던 ID와 이메일을 적어주세요.</div>
+				<form id="verifyForm" class="loginForm">
+					<input type="text" class="find-id" placeholder="ID" required>
+					<input type="email" class="find-email" placeholder="example@prac" required>
+					<button type="submit" class="no-drag">찾기</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>

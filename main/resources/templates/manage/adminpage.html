@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	<th:block th:fragment="assets">
+	<script th:src="@{/js/adminpage.js}" defer></script>
+	<link rel="stylesheet" th:href="@{/css/adminpage.css}">
+	</th:block>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+		<th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>닉네임</th>
+					<th>계정 상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${userList.content}" th:data-user-account-id="${user.userAccountId}" th:data-user-status="${user.userStatus?.name()}">
+					<td th:text="${user.userAccountId}"></td>
+					<td>
+						<input type="text" class="admin-change-nickname-input" th:placeholder="${user.nickname}">
+						<button type="button" class="admin-change-nickname-button">변경</button>
+					</td>
+					<td>
+						<select class="admin-user-status-select">
+							<option value="NORMAL" th:selected="${user.userStatus?.name() == 'NORMAL'}">정상</option>
+							<option value="DORMANT" th:selected="${user.userStatus?.name() == 'DORMANT'}">휴면</option>
+							<option value="LOCKED" th:selected="${user.userStatus?.name() == 'LOCKED'}">잠김</option>
+							<option value="BANNED" th:selected="${user.userStatus?.name() == 'BANNED'}">차단</option>
+							<option value="TERMINATED" th:selected="${user.userStatus?.name() == 'TERMINATED'}">탈퇴</option>
+						</select>
+						<button type="button" class="admin-change-status-button">변경</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="detail-reply-pagenation-container" th:if="${userList != null and userList.hasContent()}">
+		    <span th:if="${userList.hasPrevious()}">
+		        <a class="reply-nav-button-enabled" th:href="@{/manage/admin(page=${userList.number - 1})}">&lt;</a>
+		    </span>
+		    <span class="reply-nav-button-disabled" th:if="${!userList.hasPrevious()}">&lt;</span>
+
+		    <span class="reply-page-number-wrapper" th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+		        <strong class="reply-page-link-active" th:if="${pageNumber - 1 == userList.number}" th:text="${pageNumber}"></strong>
+		        <a class="reply-page-link-inactive" th:if="${pageNumber - 1 != userList.number}" th:href="@{/manage/admin(page=${pageNumber - 1})}" th:text="${pageNumber}">1</a>
+		    </span>
+
+		    <span th:if="${userList.hasNext()}">
+		        <a class="reply-nav-button-enabled" th:href="@{/manage/admin(page=${userList.number + 1})}">&gt;</a>
+		    </span>
+		    <span class="reply-nav-button-disabled" th:if="${!userList.hasNext()}">&gt;</span>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

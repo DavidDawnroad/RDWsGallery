@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	<th:block th:fragment="assets">
+	<script th:src="@{/js/mypage.js}" defer></script>
+	<link rel="stylesheet" th:href="@{/css/manage.css}">
+	</th:block>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::.main-contents})}">
+		<div class="main-contents">
+		<th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+		<div class="manage-content-container">
+			<div class="manage-content-container-header">
+				<h1 class="manage-nickname-area" th:text="|@${manageData.userData.userAccountId}|"></h1>
+				<span th:text="|${manageData.userData.nickname}의 사용자 페이지입니다.|"></span>
+			</div>
+			<div class="manage-content-container-body">
+				<div class="manage-content-nickname-field" th:if="${manageData.userData.userAccountId} == ${#authentication.name}">
+					<span>현재 닉네임: </span>
+					<input type="text" id="manage-content-nickname" th:value="${manageData.userData.nickname}">
+					<button id="manage-change-my-nickname-button" type="button">변경</button>
+					<span id="manage-change-my-nickname-message"></span>
+				</div>
+				<div class="manage-content-fields-wrapper">
+					<div class="manage-content-post-field">
+						<h3>최근 작성글</h3>
+						<div class="manage-content-field" th:each="board : ${manageData.boardDatas}">
+							<a class="manage-content-first" th:href="@{/board/{id}(id=${board.boardSeq})}" th:text="${board.title}"></a>
+							<span class="manage-content-second" th:text="${#temporals.format(board.regdate, 'yyyy.MM.dd HH:mm:ss')}"></span>
+						</div>
+					</div>
+					<div class="manage-content-reply-field">
+						<h3>최근 작성 댓글</h3>
+						<div class="manage-content-field" th:each="reply : ${manageData.replyDatas}">
+							<div class="manage-content-datas">
+								<a class="manage-content-first" th:href="@{/board/{id}(id=${reply.boardSeq})}" th:text="${reply.content}"></a>
+								<div class="manage-content-first-title" th:text="|&#8598; ${reply.title}|"></div>
+							</div>
+							<span class="manage-content-second" th:text="${#temporals.format(reply.regdate, 'yyyy.MM.dd HH:mm:ss')}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</body>
+</html>

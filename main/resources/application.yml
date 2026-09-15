@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: prac
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: C##prac
+    password: java1234
+
+# Redis 서버 설정
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# 스케줄링 스레드 풀 크기를 기본 1개에서 확장하여 한 스케줄러의 이상 작동으로 다른 스케줄러의 블로킹을 유발하는 현상 방지
+  task:
+    scheduling:
+      pool:
+        size: 5
+
+# 새로고침으로 화면을 바로 갱신할 수 있도록 캐시 비활성화
+  thymeleaf:
+    cache: false
+
+# JPA 설정
+  jpa:
+    database: oracle
+    generate-ddl: false # log에 DDL을 보여줄 것인가?
+    hibernate:
+      ddl-auto: none # create일 경우 Entity와 동일한 테이블 생성 / update일 경우 테이블을 만들고 그 테이블을 갱신
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # snake/camel로 변경시키지 않고 개발자 지정 이름으로만 만들도록
+#   show-sql: true # 자동 생성된 SQL을 console에서 보여줄 것인가?
+#   show-sql은 jpa의 하위 프로퍼티인 Hibernate의 표준 출력을 사용하여 로그 포맷이 맞지 않으므로, 3.3+ 버전부터는 false 권장
+    show-sql: false
+    properties:
+      hibernate:
+        format-sql: true
+
+# show-sql은 로그 시스템을 거치지 않고 system.out 으로 query를 날리기 때문에 시간/로그레벨/스레드ID 등의 메타 정보가 붙지 않고 텍스트로만 출력된다.
+# system.out 방식은 동기 방식으로 작동해 최적화 성능을 저하시키기 때문에 실제 운영 환경에서는 사용하면 안 되는 금기 사항이다.
+# query를 텍스트 방식으로 쉽게 보여주지만 정작 query의 ? 부분 파라미터에 무슨 값이 들어갔는지는 보이지 않는 점도 단점이다.
+
+logging:
+  level:
+    org.hibernate.SQL: debug # Hibernate가 생성한 SQL문을 스프링부트 공식 로깅 시스템인 Logback으로 보내고, 로그를 DEBUG 레벨로 활성화
+    org.hibernate.orm.jdbc.bind: trace # ? 위치에 무슨 값이 바인딩됐는지 보여주는 옵션. 데이터는 상세하게 찍혀야 하므로 TRACE 레벨로 활성화
+
+server:
+  port: 8090
+  servlet:
+    context-path: "/prac"
+    session:
+      timeout: 2h # 세션에 저장된 정보의 유효 기간: 2시간

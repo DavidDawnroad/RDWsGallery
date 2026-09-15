@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- 정규 페이지의 태그묶음을 assets라는 이름으로 받겠다 -->
+<head th:fragment="html-head(assets)">
+	<meta charset="UTF-8">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	
+	<title>RDW's gallery</title>
+	
+	<!-- Fetch API 대신 Vue/React 확장을 고려한 Axios 라이브러리 -->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	<!-- Axios 헤더 설정에 CSRF 토큰 추가 -->
+	<script th:src="@{/js/csrf-config.js}"></script>
+	
+	<!-- 토스트 메시지용 Notyf 라이브러리 설정 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+	
+	<!-- context-path 설정 & 로그인 시 이전에 머물던 페이지로 돌아가는 작업 -->
+	<script th:inline="javascript">
+		// Thymeleaf에서 JavaScript 내부에 Context Path를 안전하게 주입하기 위해 사용하는 템플릿 코드
+		window.contextPath = /*[[@{/}]]*/ ''; // /prac/
+		// const로 선언 시 js파일에서 접근하지 못 할 가능성이 있으므로 window로 명시적 전역 변수 선언
+		
+		document.addEventListener("DOMContentLoaded", function() {
+			
+		    const loginLink = document.getElementById("header-login-link");
+			
+		    if (loginLink) {
+		        loginLink.addEventListener("click", function(event) {
+					
+					// @{/login}으로 이동하는 것을 일시 정지
+		            event.preventDefault(); 
+		            
+		            // 현재 페이지의 전체 URL 획득
+		            const currentPath = window.location.pathname + window.location.search;
+		            
+		            // redirect 파라미터를 인코딩한 후 원래 가려던 로그인 주소(loginLink.href == /prac/login) 뒤에 붙이고 이동
+		            window.location.href = loginLink.href + '?redirect=' + encodeURIComponent(currentPath);
+		        });
+		    }
+		});
+	</script>
+	<!-- th:block은 지워지고(원래그럼) block 자리를 assets의 내용물로 교체 -->
+	<th:block th:replace="${assets}">
+</head>
+
+<div th:fragment="body-design(design)" class="inner">
+	<a class="logo-link" th:href="@{/board}"><img id="logo" th:src="@{/images/logo.png}" alt="logo image"></img></a>
+	<th:block th:replace="${design}">
+</div>
+
+<nav th:fragment="top-menu" draggable="false" style="-webkit-user-drag: none;">
+	<div>
+		<a class="nav-link" th:href="@{/board}">게시판 홈</a>
+		<span sec:authorize="isAnonymous()">
+			<span class="divider">|</span>
+			<!-- 로그인 페이지로 이동하기 전에 머물렀던 페이지로 다시 이동하기 위해 현재 주소를 인코딩하여 URL Query Parameter 로 붙임 -->
+			<a class="nav-link" id="header-login-link" th:href="@{/login}">로그인</a>
+			<span class="divider">|</span>
+			<a class="nav-link" th:href="@{/signup}">회원가입</a>
+		</span>
+		<span sec:authorize="isAuthenticated()">
+			<span class="divider">|</span>
+			<a class="nav-link-username" th:href="@{|/manage/${#authentication.name}|}" th:text="|${#authentication.name} 님|"></a>
+			<span class="divider">|</span>
+			<form id="logoutForm" th:action="@{/logout}" method="post" style="display: inline;">
+				<!-- a 태그를 하이퍼링크 대신 JS 이벤트를 실행하는 버튼 역할로 사용 -->
+				<!-- void(expr): 표현식(expr)을 계산하되 아무런 값을 반환하지 말 것(=> expr=0(false) 이니까 페이지 이동(href) 없음) -->
+				<a class="nav-link" href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit();">로그아웃</a>
+			</form>
+		</span>
+		<span sec:authorize="hasRole('ADMIN')">
+			<span class="divider">|</span>
+			<a class="nav-link" th:href="@{/portal/manage/admin}" style="color: red;">관리자 포탈</a>
+		</span>
+	</div>
+</nav>
+</html>

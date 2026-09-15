@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+    <th:block th:fragment="assets">
+		<script th:src="@{/js/board-detail.js}" defer></script>
+		<link rel="stylesheet" th:href="@{/css/board.css}">
+    </th:block>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::#main-contents})}">
+		<div id="main-contents">
+	    <th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+		    <div class="detail-container" th:data-board-seq="${board.boardSeq}" th:data-views-token="${board.viewsToken}">
+		        <div class="detail-header">
+		            <span th:switch="${board.category.name}">
+						<span th:case="Manage">[관리]</span>
+						<span th:case="Notice">[공지]</span>
+						<span th:case="General">[일반]</span>
+					</span>
+					<span class="detail-title" th:text="${board.title}"></span>
+				</div>
+				<div class="detail-info">
+					<!-- ${#temporals} : 날짜/시간 API를 라이브러리처럼 다룰 수 있게 하는 Thymeleaf 내장 유틸리티 객체 -->
+		            <span th:text="${board.nickname}"></span> | <span th:text="${#temporals.format(board.regdate, 'yyyy.MM.dd HH:mm:ss')}"></span> | 조회수 <span id="detail-view-count" th:text="${board.views}"></span> | 추천수 <span th:text="${board.likes}"></span>
+		        </div>
+		        <div class="detail-content" th:text="${board.content}"></div>
+				<div class="like-box">
+					<div class="like-items">
+						<span class="like-value" id="like-value" th:text="${board.likes}"></span>
+						<img id="like-image" th:src="@{/images/like.png}" alt="like-image"></img>
+						<img id="dislike-image" th:src="@{/images/dislike.png}" alt="dislike-image"></img>
+						<span class="like-value" id="dislike-value" th:text="${board.dislikes}"></span>
+					</div>
+				</div>
+				<div class="detail-reply-display" th:if="${replyPage != null and replyPage.hasContent()}">
+					<div class="reply-box" th:each="reply : ${replyPage}">
+						<div class="reply-list-header">
+							<span class="reply-list-nickname" th:text="${reply.nickname}"></span>
+						</div>
+						<div class="reply-list-content" th:text="${reply.content}"></div>
+						<div class="reply-list-footer" th:text="${reply.formattedRegdate()}"></div>
+						<th:block sec:authorize="hasRole('ADMIN')">
+						<button class="reply-delete-button" th:data-reply-seq="${reply.replySeq}"><img th:src="@{/images/icon-reply-delete.png}"></img></button>
+						</th:block>
+						<!-- ${#authentication} : 로그인 유저의 ID명, 권한, UserDetails 객체 등에 접근할 수 있는 Spring Security 확장 유틸리티 객체 -->
+						<th:block sec:authorize="!hasRole('ADMIN')" th:if="${#authentication.name == reply.userId}">
+						<button class="reply-delete-button" th:data-reply-seq="${reply.replySeq}"><img th:src="@{/images/icon-reply-delete.png}"></img></button>
+						</th:block>
+					</div>
+				</div>
+				<div class="detail-reply-pagenation-container" th:if="${replyPage != null and replyPage.hasContent()}">
+					<span th:if="${replyPage.hasPrevious()}">
+						<a class="reply-nav-button-enabled" th:href="@{/board/{boardSeq}(boardSeq=${board.boardSeq}, reply-page=${replyPage.number - 1})}">&lt;</a>
+					</span>
+					<span class="reply-nav-button-disabled" th:if="${!replyPage.hasPrevious()}">&lt;</span>
+					<!-- ${#numbers} : 자리수 쉼표, 실수의 소수점 자리수 지정, 페이징을 위한 Sequence 생성 등에 사용하는 내장 유틸리티 객체 -->
+					<span class="reply-page-number-wrapper" th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"> <!-- 시작페이지~끝페이지까지 th:each 반복 -->
+						<strong class="reply-page-link-active" th:if="${pageNumber - 1 == replyPage.number}" th:text="${pageNumber}"></strong>
+						<a class="reply-page-link-inactive" th:if="${pageNumber - 1 != replyPage.number}" th:href="@{/board/{boardSeq}(boardSeq=${board.boardSeq}, reply-page=${pageNumber - 1})}" th:text="${pageNumber}">1</a>
+					</span>
+					<span th:if="${replyPage.hasNext()}">
+						<a class="reply-nav-button-enabled" th:href="@{/board/{boardSeq}(boardSeq=${board.boardSeq}, reply-page=${replyPage.number + 1})}">&gt;</a>
+					</span>
+					<span class="reply-nav-button-disabled" th:if="${!replyPage.hasNext()}">&gt;</span>
+				</div>
+				<div class="detail-reply-container">
+					<div class="detail-userinfo-container">
+						<div class="detail-userinfo" th:text="${replyDisplayNickname}"></div>
+					</div>
+					<div class="detail-textarea-container">
+						<textarea class="detail-reply-textarea" id="reply-content-textarea"></textarea>
+					</div>
+					<button class="detail-reply-submit" id="reply-submit-button">등록</button>
+				</div>
+				<div class="button-group">
+					<span class="board-button-left">
+			            <a class="board-link" th:href="@{/board}">전체글</a>
+			        </span>
+					<th:block sec:authorize="hasRole('ADMIN')">
+					    <span class="board-button">
+							<button class="board-link js-detail-delete-button">삭제</button>
+						</span>
+					    <span class="board-button">
+							<button class="board-link js-detail-update-button">수정</button>
+						</span>
+					</th:block>
+					<!-- 작성자 본인일 경우 -->
+					<th:block sec:authorize="!hasRole('ADMIN')" th:if="${#authentication.name == board.userId}">
+					    <span class="board-button">
+							<button class="board-link js-detail-delete-button">삭제</button>
+						</span>
+					    <span class="board-button">
+							<button class="board-link js-detail-update-button">수정</button>
+						</span>
+					</th:block>
+					<div class="board-button" sec:authorize="isAuthenticated()">
+					    <a class="board-link" id="button-write" th:href="@{/board/write}">글쓰기</a>
+					</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+</body>
+</html>

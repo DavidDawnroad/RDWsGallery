@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html-head(~{::assets})}">
+	<th:block th:fragment="assets">
+	<script th:src="@{/js/board-update.js}" defer></script>
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+	</th:block>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: body-design(~{::#main-contents})}">
+		<div id="main-contents">
+		<th:block th:replace="~{fragments/header :: top-menu}"></th:block>
+			<div class="post-container" id="update-container" th:data-board-seq="${board.boardSeq}">
+				<div class="post-container-upper">
+					<select class="post-category-select" id="update-category">
+						<option value="Manage" sec:authorize="hasRole('ADMIN')" th:selected="${board.category.name == 'Manage'}">관리</option>
+						<option value="Notice" sec:authorize="hasRole('ADMIN')" th:selected="${board.category.name == 'Notice'}">공지</option>
+						<option value="General" th:selected="${board.category.name == 'General'}">일반</option>
+					</select>
+				    <input type="text" class="post-title-input" id="update-title" th:value="${board.title}" placeholder="제목을 입력해 주세요.">
+				</div>
+				<textarea class="post-content-textarea" id="update-content" th:text="${board.content}"></textarea>
+			    <div class="button-group">
+					<span class="board-button">
+					    <a class="board-link" th:href="@{/board}">취소</a>
+					</span>
+					<span class="board-button">
+					    <button class="board-link" id="update-button">수정</button>
+					</span>
+			    </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
